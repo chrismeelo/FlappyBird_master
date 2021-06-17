@@ -37,7 +37,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
     private float posicaoCanohorizontal = 0;
     private float posicaoCanovertical;
-    private float espaçoEntreCanos; // Float que está calculando o espaço entre os canos
+    private float espaçoentrecanos; // Float que está calculando o espaço entre os canos
 
     // Randomização dos canos na cena
 
@@ -50,9 +50,9 @@ public class MyGdxGame extends ApplicationAdapter {
 
     // Variaveis dos textos de pontuação, reinicio e da melnor pontuação adiquirida
 
-    BitmapFont textoPontuacao;
-    BitmapFont textoReiniciar;
-    BitmapFont textoMelhorPontuacao;
+    BitmapFont textopontuacao;
+    BitmapFont textoreiniciar;
+    BitmapFont textomelhorPontuacao;
 
     // Variaveis dos efeitos sonoros do jogo
 
@@ -62,14 +62,14 @@ public class MyGdxGame extends ApplicationAdapter {
 
     // Bool que faz a verificação se o personagem passou pelo cano
 
-    private boolean passouCano = false;
+    private boolean passoucano = false;
 
     //  Criação dos colisores do jogo e também a renderização
 
     private ShapeRenderer shapeRenderer;
     private Circle circulopassaro;
-    private Rectangle retanguloCanoSuperior;
-    private Rectangle retanguloCanoInferior;
+    private Rectangle retanguloCanosuperior;
+    private Rectangle retanguloCanoinferior;
 
     Preferences preferencias;
 
@@ -101,29 +101,29 @@ public class MyGdxGame extends ApplicationAdapter {
         alturadispositivo = Gdx.graphics.getHeight();// Coletando a altura do dispositivo
         posicaoInicialVerticalPassaro = alturadispositivo/2; // Posicionando o passarinho no meio da tela
         posicaoCanohorizontal = larguradispositivo; // Posicionando o cano no dispositivo
-        espaçoEntreCanos = 350;// Definindo o espaçamento entre os canos
+        espaçoentrecanos = 350;// Definindo o espaçamento entre os canos
 
 
         // Renderização dos textos, com cores e scale diferentes
 
-        textoPontuacao = new BitmapFont();
-        textoPontuacao.setColor( Color.WHITE);
-        textoPontuacao.getData().setScale(10);
+        textopontuacao = new BitmapFont();
+        textopontuacao.setColor( Color.WHITE);
+        textopontuacao.getData().setScale(10);
 
-        textoMelhorPontuacao = new BitmapFont();
-        textoMelhorPontuacao.setColor(Color.BLACK);
-        textoMelhorPontuacao.getData().setScale(2);
+        textomelhorPontuacao = new BitmapFont();
+        textomelhorPontuacao.setColor(Color.BLACK);
+        textomelhorPontuacao.getData().setScale(2);
 
-        textoReiniciar = new BitmapFont();
-        textoReiniciar.setColor(Color.RED);
-        textoReiniciar.getData().setScale(2);
+        textoreiniciar = new BitmapFont();
+        textoreiniciar.setColor(Color.RED);
+        textoreiniciar.getData().setScale(2);
 
         // Criação dos colliders e inicialização
 
         shapeRenderer = new ShapeRenderer();
         circulopassaro = new Circle();
-        retanguloCanoSuperior = new Rectangle();
-        retanguloCanoInferior = new Rectangle();
+        retanguloCanosuperior = new Rectangle();
+        retanguloCanoinferior = new Rectangle();
 
         // Renderização dos efeitos sonoros
 
@@ -160,13 +160,13 @@ public class MyGdxGame extends ApplicationAdapter {
 
         circulopassaro.set(50 + passaro[0].getWidth() / 2, posicaoInicialVerticalPassaro + passaro[0].getHeight() / 2, passaro[0].getWidth() / 2);
 
-        retanguloCanoSuperior.set(posicaoCanohorizontal, alturadispositivo / 2 + espaçoEntreCanos/ 2 + posicaoCanovertical, canosuperior.getWidth(), canosuperior.getHeight() );
-        retanguloCanoInferior.set(posicaoCanohorizontal, alturadispositivo / 2 - canoinferior.getHeight() - espaçoEntreCanos / 2 + posicaoCanovertical, canoinferior.getWidth(), canoinferior.getHeight());
+        retanguloCanosuperior.set(posicaoCanohorizontal, alturadispositivo / 2 + espaçoentrecanos/ 2 + posicaoCanovertical, canosuperior.getWidth(), canosuperior.getHeight() );
+        retanguloCanoinferior.set(posicaoCanohorizontal, alturadispositivo / 2 - canoinferior.getHeight() - espaçoentrecanos / 2 + posicaoCanovertical, canoinferior.getWidth(), canoinferior.getHeight());
 
         // Bool que tem a função de detectar as colisões
 
-        boolean colisaoCanoSuperior = Intersector.overlaps(circulopassaro, retanguloCanoSuperior);
-        boolean colisaoCanoInferior = Intersector.overlaps(circulopassaro, retanguloCanoInferior);
+        boolean colisaoCanoSuperior = Intersector.overlaps(circulopassaro, retanguloCanosuperior);
+        boolean colisaoCanoInferior = Intersector.overlaps(circulopassaro, retanguloCanoinferior);
 
         // Se o passarinho collidir ele vai avisar
 
@@ -203,7 +203,7 @@ public class MyGdxGame extends ApplicationAdapter {
             if (posicaoCanohorizontal < -canoinferior.getWidth()) { // Coleta a largura da tela para obrigar ela avançar quando terminar
                 posicaoCanohorizontal = larguradispositivo;
                 posicaoCanohorizontal = random.nextInt( 900 ) - 50;// Deixa ramdomizado o espaçamento
-                passouCano = false; // Definição como falsa booleana
+                passoucano = false; // Definição como falsa booleana
             }
 
             if (posicaoInicialVerticalPassaro > 0 || toqueTela)// Quando tocar na tela ira diminuir a gravidade do passarinho
@@ -243,18 +243,18 @@ public class MyGdxGame extends ApplicationAdapter {
 
         // Instanciando os canos na tela com espaços entre eles
 
-        batch.draw( canoinferior, posicaoCanohorizontal , alturadispositivo/2 - canoinferior.getHeight() - espaçoEntreCanos/2 + posicaoCanovertical);
-        batch.draw( canosuperior, posicaoCanohorizontal ,alturadispositivo/2 + espaçoEntreCanos/2 + posicaoCanovertical);
+        batch.draw( canoinferior, posicaoCanohorizontal , alturadispositivo/2 - canoinferior.getHeight() - espaçoentrecanos/2 + posicaoCanovertical);
+        batch.draw( canosuperior, posicaoCanohorizontal ,alturadispositivo/2 + espaçoentrecanos/2 + posicaoCanovertical);
 
-        textoPontuacao.draw( batch, String.valueOf( pontos ),larguradispositivo /2, alturadispositivo - 100 );// Pontuação é desenhada no topo da tela
+        textopontuacao.draw( batch, String.valueOf( pontos ),larguradispositivo /2, alturadispositivo - 100 );// Pontuação é desenhada no topo da tela
 
         // Quando o estado for 2 é game over, também instanciando as frases de game over, melhor pontuação e reinicio da partida
 
         if(estadojogo == 2)
         {
             batch.draw(gameover, larguradispositivo / 2 +200 - gameover.getWidth(), alturadispositivo / 2);
-            textoReiniciar.draw(batch, "Toque na tela para reiniciar", larguradispositivo / 2 - 250, alturadispositivo /2 - gameover.getHeight() / 2);
-            textoMelhorPontuacao.draw(batch, "A melhor pontuação foi: " + pontuacaomaxima +" Pontos adiquiridos", larguradispositivo /2 - 250, alturadispositivo /2 - gameover.getHeight() * 2);
+            textoreiniciar.draw(batch, "Toque na tela para reiniciar", larguradispositivo / 2 - 250, alturadispositivo /2 - gameover.getHeight() / 2);
+            textomelhorPontuacao.draw(batch, "A melhor pontuação foi: " + pontuacaomaxima +" Pontos adiquiridos", larguradispositivo /2 - 250, alturadispositivo /2 - gameover.getHeight() * 2);
         }
 
         // A execução irá terminar
@@ -268,9 +268,9 @@ public class MyGdxGame extends ApplicationAdapter {
         {
             // Quando o passarinho passar por um cano somara um ponto
 
-            if (!passouCano){
+            if (!passoucano){
                 pontos++;
-                passouCano = true;
+                passoucano = true;
                 somPontos.play();
             }
         }
